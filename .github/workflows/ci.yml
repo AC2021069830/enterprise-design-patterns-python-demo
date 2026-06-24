@@ -1,0 +1,31 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pytest
+        run: python -m pip install pytest
+
+      - name: Run tests
+        working-directory: ./enterprise-design-patterns-python-demo
+        run: python -m pytest
+
+      - name: Run demo
+        working-directory: ./enterprise-design-patterns-python-demo
+        run: python -m src.main
